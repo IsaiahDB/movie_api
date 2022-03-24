@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
+const bodyParser = require('body-parser');
 const morgan = require("morgan");
 
 app.use(morgan('common'));
 
-
+app.use(bodyParser.json())
 
 let topMovies = [
     {
@@ -38,9 +39,33 @@ let topMovies = [
       title: "Bad Boys"
     }
   ];
-  
-  // GET requests
+
+
+
   app.use(express.static('public'));
+
+  // GET requests
+  app.get('/doc/documentation', (req, res) => {
+    res.send(`You just performed a GET Reuqest for documentation.html`);
+    res.status(200)
+  });
+
+  app.put('/documentation/update', (req, res) => {
+    res.send('Successful GET request returning data on all the students');
+    res.status(200)
+  });
+
+  app.post('/documentation/create', (req, res) => {
+    reS.send('You just performed a POST Request');
+    res.status(200)
+  });
+
+  app.delete('/documentation/delete', (req, res) => {
+    res.send('Successful GET request returning data on all the students');
+    res.status(200)
+  });
+
+
 
   app.get('/', (req, res) => {
     res.send('Welcome to the movie theater!');
