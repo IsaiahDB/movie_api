@@ -41,27 +41,31 @@ let topMovies = [
   ];
 
 
-
   app.use(express.static('public'));
 
   // GET requests
-  app.get('/doc/documentation', (req, res) => {
+  app.get('/user', (req, res) => {
     res.send(`You just performed a GET Reuqest for documentation.html`);
     res.status(200)
   });
 
-  app.put('/documentation/update', (req, res) => {
-    res.send('Successful GET request returning data on all the students');
+  app.get('/user', (req, res) => {
+    res.send('Successful GET');
+    res.status(200)
+  })
+
+  app.put('/user', (req, res) => {
+    res.send('Successful PUT');
     res.status(200)
   });
 
-  app.post('/documentation/create', (req, res) => {
-    reS.send('You just performed a POST Request');
+  app.post('/user', (req, res) => {
+    res.send('Successful POST');
     res.status(200)
   });
 
-  app.delete('/documentation/delete', (req, res) => {
-    res.send('Successful GET request returning data on all the students');
+  app.delete('/user', (req, res) => {
+    res.send('Successful DELETE');
     res.status(200)
   });
 
