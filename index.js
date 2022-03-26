@@ -44,7 +44,7 @@ let topMovies = [
   app.use(express.static('public'));
 
   // GET requests
-  app.get('/user', (req, res) => {
+  app.get('/', (req, res) => {
     res.send(`You just performed a GET Reuqest for documentation.html`);
     res.status(200)
   });
