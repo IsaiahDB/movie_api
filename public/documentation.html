@@ -10,6 +10,7 @@
 <body>
     <h1>Movie List API</h1>
     <h2>How to Use The API API</h2>
+    <h1>User Database</h1>
     <table>
         <tr>
             <th> REQUEST </th>
@@ -19,32 +20,120 @@
             <th> RESPONSE DATA BODY FORMAT </th>
         </tr>
         <tr>
-            <td> Show GET Request </td>
-            <td> /user </td>
-            <td> GET </td>
-            <td> Show a GET result: "text" </td>
-            <td> Successful GET </td>
-        </tr>
-        <tr>
-            <td> Add data to API </td>
-            <td> /user </td>
+            <td> Add data to User database</td>
+            <td> /users </td>
             <td> POST </td>
-            <td> Show a POST result: "text" </td>
-            <td> Successful POST </td>
+            <td> app.post('/users', (req, res) => { } <br> </td>
+            <td> Display json data <br> 
+                {
+                    Username: "testOneUser",<br>
+                    Password: "IOX",<br>
+                    Email: "testOneUser@gmail.com",<br>
+                    Birthday: "2000-20-10",<br>
+                    FavoriteMovies: [ " Avengers: Endgame","Wall-E" ]
+                } </td>
         </tr>
         <tr>
-            <td> Delete data from API </td>
-            <td> /user</td>
+            <td>Show the data of User Database</td>
+            <td> /users </td>
+            <td> GET </td>
+            <td> app.get('/users', (req, res) => { } </td>
+            <td>
+                {
+                    Username: "testOneUser",<br>
+                    Password: "IOX",<br>
+                    Email: "testOneUser@gmail.com",<br>
+                    Birthday: "2000-20-10",<br>
+                    FavoriteMovies: [ " Avengers: Endgame","Wall-E" ]
+                }
+            </td>
+        </tr>
+        <tr>
+            <td> Delete data from User Database </td>
+            <td> /users</td>
             <td> DELETE </td>
-            <td> Show a DELETE result: "text"  </td>
-            <td> Successful DELETE </td>
+            <td> app.delete('/users/:Username', (req, res) => { }  </td>
+            <td> {<br>
+                    null<br>
+                } </td>
         </tr>
         <tr>
-            <td> Update current API data </td>
-            <td> /user </td>
+            <td> Update data of User Database </td>
+            <td> /users </td>
             <td> PUT </td>
-            <td> Show a PUT result: "text"  </td>
-            <td> Successful PUT </td>
+            <td> app.put('/users/:Username', (req, res) => { }  </td>
+            <td>
+                {
+                    Username: "testUpdateUser",<br>
+                    Password: "updateIOX",<br>
+                    Email: "testUpdateUser@gmail.com",<br>
+                    Birthday: "2000-20-10",<br>
+                    FavoriteMovies: [" Update Movie Array ", " Avengers: Endgame "," Hunger Games " ]
+                }
+                 </td>
+        </tr>
+    </table>
+    <h1>Movie Database</h1>
+    <table>
+        <tr>
+            <th> REQUEST </th>
+            <th> URL </th>
+            <th> HTTP Method </th>
+            <th> REQUEST DATA FORMAT </th>
+            <th> RESPONSE DATA BODY FORMAT </th>
+        </tr>
+        <tr>
+            <td> Add data to Movie database</td>
+            <td> /movie </td>
+            <td> POST </td>
+            <td> app.post('/movie', (req, res) => { } <br> </td>
+            <td> Display json data <br> 
+                {
+                    Username: "movieOneUser",<br>
+                    Password: "YUI",<br>
+                    Email: "movieOneUser@gmail.com",<br>
+                    Birthday: "1998-20-10",<br>
+                    FavoriteMovies: [ " Star Trek ","Star Wars" ]
+                } </td>
+        </tr>
+        <tr>
+            <td>Show the data of Movie Database</td>
+            <td> /movie </td>
+            <td> GET </td>
+            <td> app.get('/movie', (req, res) => { } </td>
+            <td>
+                {
+                    Username: "movieOneUser",<br>
+                    Password: "YUI",<br>
+                    Email: "movieOneUser@gmail.com",<br>
+                    Birthday: "1998-20-10",<br>
+                    FavoriteMovies: [ "Star Trek","Star Wars" ]
+                }
+            </td>
+        </tr>
+        <tr>
+            <td> Delete data from Movie Database </td>
+            <td> /movie</td>
+            <td> DELETE </td>
+            <td> app.delete('/movie/:title', (req, res) => { }  </td>
+            <td> {<br>
+                    null<br>
+                } </td>
+        </tr>
+        <tr>
+            <td> Update data of Movie Database </td>
+            <td> /movie </td>
+            <td> PUT </td>
+            <td> app.put('/movie/:title', (req, res) => { }  </td>
+            <td>
+                {
+                    Username: "movieUpdateUser",<br>
+                    Password: "updateYUI",<br>
+                    Email: "movieUpdateUser@gmail.com",<br>
+                    Birthday: "1998-20-10",<br>
+                    FavoriteMovies: [" Update Movie Array ", " Inspector Gadget "," Spy Kids " ]
+                }
+                 </td>
         </tr>
     </table>
     
