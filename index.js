@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-  app.use(express.static('public/documentation.html'));
+  app.use(express.static('public'));
 
   // GET requests
   app.get('/', (req, res) => {
