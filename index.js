@@ -14,6 +14,10 @@ app.use(morgan('common'));
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
+
 
 
   app.use(express.static('public'));
@@ -24,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
     res.status(200)
   });
 
-  app.get('/users', (req, res) => {
+  app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.find()
       .then((user) => {
         res.json(user);
@@ -96,7 +100,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
       });
   });
 
-  app.get('/movie', (req, res) => {
+  app.get('/movie', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.find()
       .then((movie) => {
         res.json(movie);
