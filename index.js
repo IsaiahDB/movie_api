@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const morgan = require("morgan");
 const mongoose = require('mongoose');
 const Models = require('./model.js');
+const bcrypt = require('bcrypt');
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -14,9 +16,15 @@ app.use(morgan('common'));
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
+
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+ console.log('Listening on Port ' + port);
+});
 
 
 
@@ -60,6 +68,23 @@ require('./passport');
   });
 
   app.post('/users', (req, res) => {
+
+    [
+      check('Username', 'Username is required').isLength({min: 5}),
+      check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+      check('Password', 'Password is required').not().isEmpty(),
+      check('Email', 'Email does not appear to be valid').isEmail()
+    ], (req, res) => {
+  
+    // check the validation object for errors
+      let errors = validationResult(req);
+  
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+      }
+
+
+    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOne({ Username: req.body.Username })
       .then((user) => {
         if (user) {
@@ -82,8 +107,10 @@ require('./passport');
       .catch((error) => {
         console.error(error);
         res.status(500).send('Error: ' + error);
-      });
+    });
+  }
   });
+  
 
   app.delete('/users/:Username', (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
@@ -186,6 +213,6 @@ require('./passport');
     res.status(500).send('Something broke!');
   });
 
-  app.listen(8080, () => {
+  app.listen(port, () => {
     console.log('Your app is listening on port 8080.');
   });
