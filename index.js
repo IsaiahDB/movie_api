@@ -122,7 +122,7 @@ require('./passport');
       });
   });
 
-  app.get('/movie', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.find()
       .then((movie) => {
         res.json(movie);
@@ -133,7 +133,7 @@ require('./passport');
       });
   });
 
-  app.put('/movie/:Title', (req, res) => {
+  app.put('/movies/:Title', (req, res) => {
     Movies.findOneAndUpdate({ Title: req.params.Title }, { $set:
       {
         Title: req.body.Title,
@@ -156,7 +156,7 @@ require('./passport');
     });
   });
 
-  app.post('/movie', (req, res) => {
+  app.post('/movies', (req, res) => {
     Movies.findOne({ Title: req.body.Title })
       .then((movie) => {
         if (movie) {
@@ -186,7 +186,7 @@ require('./passport');
       });
   });
 
-  app.delete('/movie/:Title', (req, res) => {
+  app.delete('/movies/:Title', (req, res) => {
     Movies.findOneAndRemove({ Title: req.params.Title })
       .then((movie) => {
         if (!movie) {
