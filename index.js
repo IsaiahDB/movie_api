@@ -65,10 +65,10 @@ require('./passport');
 
   app.post('/users',
     [
-      check('username', 'Username is required').isLength({min: 5}),
-      check('username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-      check('password', 'Password is required').not().isEmpty(),
-      check('email', 'Email does not appear to be valid').isEmail()
+      check('Username', 'Username is required').isLength({min: 5}),
+      check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+      check('Password', 'Password is required').not().isEmpty(),
+      check('Email', 'Email does not appear to be valid').isEmail()
     ], 
     (req, res) => {
 
@@ -78,19 +78,19 @@ require('./passport');
       if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
       }
-      let hashedPassword = Users.hashPassword(req.body.password);
-      Users.findOne({ username: req.body.username }) // Search to see if a user with the requested username already exists
+      let hashedPassword = Users.hashPassword(req.body.Password);
+      Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
         .then((user) => {
           if (user) {
             //If the user is found, send a response that it already exists
-            return res.status(400).send(req.body.username + ' already exists');
+            return res.status(400).send(req.body.Username + ' already exists');
           } else {
             Users
               .create({
-                username: req.body.username,
-                password: hashedPassword,
-                email: req.body.email,
-                birthday: req.body.birthday
+                Username: req.body.Username,
+                Password: hashedPassword,
+                Email: req.body.Email,
+                Birthday: req.body.Birthday
               })
               .then((user) => { res.status(201).json(user) })
               .catch((error) => {
@@ -105,6 +105,7 @@ require('./passport');
         });
     }
   );
+
     
 
   app.delete('/users/:Username', (req, res) => {
@@ -131,6 +132,20 @@ require('./passport');
         console.error(err);
         res.status(500).send('Error: ' + err);
       });
+  });
+
+  app.get('/movies/:Title', (req, res) => {
+    Movies.findOne({ Title: req.params.Title}) // Find the movie by title
+    .then((movie) => {
+      if(movie){ // If movie was found, return json, else throw error
+        res.status(200).json(movie);
+      } else {
+        res.status(400).send('Movie not found');
+      };
+    })
+    .catch((err) => {
+      res.status(500).send('Error: '+ err);
+    });
   });
 
   app.put('/movies/:Title', (req, res) => {
@@ -167,10 +182,7 @@ require('./passport');
               Title: req.body.Title,
               Description: req.body.Description,
               Genre: req.body.Genre,
-              Director: {
-                Name: req.body.Name,
-                Bio: req.body.Bio
-              },
+              Director: {Name: req.body.Name, Bio: req.body.Bio}
               
             })
             .then((movie) =>{res.status(201).json(movie) })
@@ -201,8 +213,6 @@ require('./passport');
       });
   });
 
-
-
   app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
@@ -212,3 +222,4 @@ require('./passport');
   app.listen(port, '0.0.0.0',() => {
     console.log('Listening on Port ' + port);
    });
+   
